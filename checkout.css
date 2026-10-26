@@ -1,0 +1,53 @@
+:root{--red:#d70a1a;--dark:#103723;--gold:#e8bb5c;--bg:#fff9ee;--tx:#1c241a}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--tx);line-height:1.4}
+header{background:#fff9ef;color:#103723;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;box-shadow:0 2px 14px #0002}
+.hl{font-family:Georgia,serif;font-size:20px;font-weight:700;color:#103723;text-decoration:none}.hl span{font:700 10px system-ui,sans-serif;color:#a97827;letter-spacing:.15em}
+.back{color:#201913;text-decoration:none;font-size:.9rem;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.wrap{max-width:980px;margin:24px auto;padding:0 16px;display:grid;grid-template-columns:1fr 340px;gap:20px}
+@media(max-width:820px){.wrap{grid-template-columns:1fr}.resumo{order:-1}}
+.card{background:#fff;border-radius:14px;padding:20px;box-shadow:0 2px 10px #0001;margin-bottom:16px}
+h2{font-size:1.05rem;margin-bottom:14px;color:var(--dark)}
+.row{display:grid;gap:12px;margin-bottom:12px}
+.r2{grid-template-columns:1fr 1fr}.r3{grid-template-columns:2fr 1fr 1fr}
+@media(max-width:560px){.r2,.r3{grid-template-columns:1fr}}
+label{display:block;font-size:.8rem;font-weight:600;margin-bottom:4px}
+input{width:100%;padding:11px 12px;border:1.5px solid #d9cfc0;border-radius:9px;font-size:1rem;background:#fff}
+input:focus{outline:none;border-color:var(--red)}
+input.erro{border-color:#d00}
+.msg{font-size:.75rem;color:#d00;min-height:1em;margin-top:3px}
+.resumo{position:sticky;top:16px;align-self:start}
+.linha{display:flex;justify-content:space-between;padding:6px 0;font-size:.95rem}
+.linha.total{border-top:1px solid #eee;margin-top:6px;padding-top:12px;font-weight:700;font-size:1.2rem}
+.de{color:#888;font-size:.85rem}
+.off{background:var(--red);color:#fff;border-radius:6px;padding:2px 7px;font-size:.75rem;margin-left:6px}
+button{width:100%;padding:15px;border:0;border-radius:999px;background:linear-gradient(#e0172f,#a50d22);color:#fff;font-size:1.1rem;font-weight:700;cursor:pointer;margin-top:12px}
+button:hover{filter:brightness(1.1)}button:disabled{opacity:.6;cursor:wait}
+.seguro{font-size:.75rem;text-align:center;color:#666;margin-top:10px}
+.ok{display:none;text-align:center}
+.ok h2{font-size:1.4rem}
+pre{text-align:left;background:#f6f0e4;padding:12px;border-radius:8px;font-size:.8rem;overflow:auto;margin-top:12px}
+
+.ic{width:1.1em;height:1.1em;stroke:currentColor;fill:none;vertical-align:-.18em}
+.sec{display:inline-flex;align-items:center;gap:6px;font-size:.85rem;color:#555}
+.seguro .sec{justify-content:center}
+@media(max-width:480px){header .sec{display:none}}
+
+.prod{display:flex;align-items:center;gap:12px;padding-bottom:10px}.prod img{width:64px;height:64px;border-radius:10px;object-fit:cover;object-position:center 40%;flex:none}.prod div{flex:1;min-width:0}.prod b{display:block;font-size:.9rem;line-height:1.25}.prod small{display:block;color:#a97827;font-weight:600;margin-top:2px}.prod>span{font-weight:700;white-space:nowrap}
+.aviso{background:#fff3f3;border:1px solid #f1b8b8;color:#8a1020;border-radius:10px;padding:12px;font-size:.9rem;margin-top:12px;display:none}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.pay{display:flex;flex-wrap:wrap;gap:6px}.pay.center{justify-content:center;margin-top:12px}.pay img{width:40px;height:26px;border-radius:4px;display:block}
+
+/* Pagamento Pagou.AI */
+.payment-options { display: grid; gap: 10px; margin: 14px 0 4px; }
+.payment-option { display: flex; align-items: center; gap: 12px; padding: 14px; border: 1px solid #d8e2da; border-radius: 12px; cursor: pointer; }
+.payment-option:has(input:checked) { border-color: #1c7549; background: #f1f8f3; }
+.payment-option input { width: 18px; height: 18px; accent-color: #17683f; flex: 0 0 auto; }
+.payment-option span { display: grid; gap: 3px; }
+.payment-option small, .payment-note { color: #66736b; font-size: .86rem; }
+#card-fields { margin-top: 16px; }
+#card-fields[hidden], .payment-result[hidden] { display: none !important; }
+.payment-result { margin-top: 16px; }
+.payment-result h2 { margin-top: 0; }
+.pix-code { width: 100%; min-height: 100px; padding: 10px; border: 1px solid #d8e2da; border-radius: 8px; resize: vertical; font-size: .85rem; }
+.copy-pix { margin-top: 10px; }
