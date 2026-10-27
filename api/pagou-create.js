@@ -1,4 +1,3 @@
-
 const API_BASE = 'https://api.conta.pagou.ai/v1';
 
 const PRODUCT = {
@@ -200,12 +199,70 @@ module.exports = async (req, res) => {
     }
 
     if (!response.ok) {
+      // Extrai a mensagem de erro sem retornar a resposta inteira.
+      const getGatewayMessage = value => {
+        if (typeof value === 'string') return value;
+
+        if (Array.isArray(value)) {
+          return value
+            .map(getGatewayMessage)
+            .filter(Boolean)
+            .join('; ');
+        }
+
+        if (value && typeof value === 'object') {
+          const parts = [];
+
+          for (const key of [
+            'message',
+            'error',
+            'detail',
+            'description',
+            'code'
+          ]) {
+            if (
+              typeof value[key] === 'string' ||
+              typeof value[key] === 'number'
+            ) {
+              parts.push(String(value[key]));
+            }
+          }
+
+          if (!parts.length && value.errors) {
+            parts.push(getGatewayMessage(value.errors));
+          }
+
+          return parts.join(' — ');
+        }
+
+        return '';
+      };
+
+      let gatewayMessage = getGatewayMessage(data);
+
+      // Oculta dados pessoais que eventualmente apareçam no erro.
+      gatewayMessage = gatewayMessage
+        .replace(
+          /[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}/gi,
+          '[e-mail ocultado]'
+        )
+        .replace(/\b\d{11}\b/g, '[documento ocultado]')
+        .replace(/\b\d{10,}\b/g, '[número ocultado]')
+        .slice(0, 500);
+
+      const gatewayStatus = response.status;
+
+      const publicMessage = gatewayMessage
+        ? `A Pagou.AI recusou a transação (HTTP ${gatewayStatus}): ${gatewayMessage}`
+        : `A Pagou.AI recusou a transação (HTTP ${gatewayStatus}) e não enviou um motivo legível.`;
+
       return res.status(
-        response.status >= 400 && response.status < 500
+        gatewayStatus >= 400 && gatewayStatus < 500
           ? 422
           : 502
       ).json({
-        error: 'A Pagou.AI não aceitou a transação. Confira o credenciamento, os dados e as configurações da conta.'
+        error: publicMessage,
+        gatewayStatus
       });
     }
 
